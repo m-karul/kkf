@@ -2,7 +2,7 @@ package main
 
 import (
 	"fmt"
-	"io/ioutil"
+	"kkf/compile"
 	"kkf/parsers"
 )
 
@@ -18,37 +18,54 @@ var allowedTypes = map[string]bool{
 	"double": true,
 }
 
+func test() {
+	data := []byte(`
+$open@first_open(const:"./file", range:1-200, flags:flag1, const: "baz") -> openfd
+$open@first_open(const:"./file2", range:1-200, flags:flag1, const: "222") -> openfd
+`)
+
+	macros := parsers.ParserMacros(data)
+
+	fmt.Printf("%s", macros[1].Args)
+}
 func main() {
-	content, err := ioutil.ReadFile("./formats/ornek.k")
+
+	/*content, err := ioutil.ReadFile("./formats/ornek.k")
 	if err != nil {
 		fmt.Println("Dosya okunamadı:", err)
 		return
 	}
+	var flags []parsers.FlagDef
+	flags = parsers.ParseFlags(content)
 
-	defines := parsers.ParseDefine(content)
-	for _, entry := range defines {
-		fmt.Printf("Key: %-5s Type: %-6s Value: %s\n", entry.Key, entry.Type, entry.Value)
-	}
+	//for _, f := range flags {
+	//	fmt.Println("Flag:", f.FlagName)
+	//	fmt.Println("Values:", f.Values)
+	//}
 
-	fmt.Println("-------------------------------")
-	structs := parsers.ParseStructs(content)
-	for _, s := range structs {
-		fmt.Println("Struct:", s.Name)
-		for _, f := range s.Fields {
-			fmt.Printf("  - Type: %-10s Name: %-10s Meta: %s\n", f.Type, f.Name, f.Meta)
-		}
-	}
-	fmt.Println("-------------------------------")
+	var formatDefines []parsers.DefineEntry
+	formatDefines = parsers.ParseDefine(content)
+	//for _, entry := range formatDefines {
+	//	fmt.Printf("Key: %-5s Type: %-6s Value: %s\n", entry.Key, entry.Type, entry.Value)
+	//}
 
-	macroCalls := parsers.ParserMacros(content)
-	for _, m := range macroCalls {
-		fmt.Println("---------------")
-		fmt.Printf("Macro:   %s\n", m.MacroName)
-		fmt.Printf("Func:    %s\n", m.FuncName)
-		fmt.Printf("Args:    %v\n", m.Args)
-		fmt.Printf("Output:  %s\n", m.OutputVar)
-	}
+	//fmt.Println("-------------------------------")
+	var formatStructs []parsers.StructDef
+	formatStructs = parsers.ParseStructs(content)
+	//for _, s := range formatStructs {
+	//	fmt.Println("Struct:", s.Name)
+	//	for _, f := range s.Fields {
+	//		fmt.Printf("  - Type: %-10s Name: %-10s Meta: %s\n", f.Type, f.Name, f.Meta)
+	//	}
+	//}
+	//fmt.Println("-------------------------------")
+	var formatMacros []parsers.MacroCall
+	formatMacros = parsers.ParserMacros(content)
+
+	converter.ConvertToCLine(flags, formatDefines, formatStructs, formatMacros)
 
 	return
+	*/
 
+	compile.GetOs()
 }

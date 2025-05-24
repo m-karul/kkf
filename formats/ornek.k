@@ -20,10 +20,12 @@ struct Address {
 #   özellikler:
 #       range:1000-100000
 #       flags:flag_degisken_adi
-#       const:flag adı yada değeri
+#       flag:   flag adı 
+#       const:sabit değer
 #       
 #
 
 $open@first_open(Const:"./file", Range:int32, Flags:flag1, Struct:Person) -> openfd
 $ioctl@aaa(Const:"./file2", Range:1-200, Flags:flag1, Const:"AA") -> openfd
+$ioctl@calis()
 
